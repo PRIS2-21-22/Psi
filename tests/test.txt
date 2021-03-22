@@ -1,0 +1,17 @@
+#coeff, exp
+2,5
+7 ,7
+8, 9
+
+	5      ,1#ignora espacios, tabs y lineas vacias
+
+
+# prueba non-ASCII chars:
+# (✿◠‿◠) 💛 (◠‿◠✿)
+
+# prueba # varios # comentarios # por # linea #
+###############################################
+
+2, 0
+0, 0	#0,0 = fin de la secuencia
+1, 8	#linea ignorada
