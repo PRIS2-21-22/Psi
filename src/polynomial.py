@@ -60,18 +60,18 @@ class Polynomial:
 			self.monomials = []
 		else:
 			self.monomials = monomials.copy()
-			self.fillGaps()
+			self.fill_gaps()
 
 	def __add__(self, other):
 		result = Polynomial()
-		longList  = self.monomials if (len(self.monomials) > len(other.monomials)) else other.monomials
-		shortList = self.monomials if (len(self.monomials) < len(other.monomials)) else other.monomials
+		long_list  = self.monomials if (len(self.monomials) > len(other.monomials)) else other.monomials
+		short_list = self.monomials if (len(self.monomials) < len(other.monomials)) else other.monomials
 
-		for i in range(0, len(shortList)):
-			result.monomials.append(shortList[i] + longList[i])
+		for i in range(0, len(short_list)):
+			result.monomials.append(short_list[i] + long_list[i])
 
-		result.monomials.extend(longList[len(shortList):])
-		result.fillGaps()
+		result.monomials.extend(long_list[len(short_list):])
+		result.fill_gaps()
 		return result
 
 	def __sub__(self, other):
@@ -93,13 +93,13 @@ class Polynomial:
 		if len(self.monomials) != len(other.monomials):
 			return False
 
-		areEqual = True
+		are_equal = True
 		for i in range(0, len(self.monomials)):
 			if self.monomials[i] != other.monomials[i]:
-				areEqual = False
+				are_equal = False
 				break
 
-		return areEqual
+		return are_equal
 
 	def __ne__(self, other):
 		return not(self == other)
@@ -114,7 +114,7 @@ class Polynomial:
 
 		return string
 
-	def readFile(self, filepath):
+	def read_file(self, filepath):
 		file = open(filepath, "r")
 		for i in file.readlines():
 			line = i[:i.find("#")]
@@ -131,10 +131,10 @@ class Polynomial:
 			self.monomials.append(Monomial(coeff, exp))
 
 		file.close()
-		self.fillGaps()
+		self.fill_gaps()
 		return self
 
-	def fillGaps(self):
+	def fill_gaps(self):
 		self.monomials.sort()
 		length = len(self.monomials) - 1
 		if self.monomials[length].exponent == length:  # Already filled
