@@ -15,6 +15,9 @@ class Monomial:
 	def __sub__(self, other):
 		return self + ~other
 
+	def __mul__(self, other):
+		return Monomial(self.coefficient * other.coefficient, self.exponent + other.exponent)
+
 	def __invert__(self):
 		return Monomial(-self.coefficient, self.exponent)
 
@@ -77,8 +80,14 @@ class Polynomial:
 	def __sub__(self, other):
 		return self + ~other
 
-	#def __mul__(self, other):
-		#return
+	def __mul__(self, other):
+		result = []
+
+		for i in self.monomials:
+			for j in other.monomials:
+				result.append(i * j)
+
+		return Polynomial(result)
 
 	#def __truediv__(self, other):
 		#return
@@ -136,6 +145,7 @@ class Polynomial:
 
 	def fill_gaps(self):
 		self.monomials.sort()
+		self.simplify()
 		length = len(self.monomials) - 1
 		if self.monomials[length].exponent == length:  # Already filled
 			return
@@ -150,3 +160,24 @@ class Polynomial:
 
 		self.monomials.extend(extension)
 		self.monomials.sort()
+
+	def simplify(self):
+		# Adds a dummy element at the end of the array. Not present in the result.
+		self.monomials.append(Monomial(0,0))
+
+		result = []
+		current_list = []
+		current_exp = self.monomials[0].exponent
+		for i in self.monomials:
+			if i.exponent != current_exp:
+				sum = Monomial(0, current_exp)
+				for j in current_list:
+					sum = sum + j
+
+				result.append(sum)
+				current_exp = i.exponent
+				current_list = []
+
+			current_list.append(i)
+
+		self.monomials = result.copy()
