@@ -143,6 +143,7 @@ class Polynomial:
 		self.fill_gaps()
 		return self
 
+	# Fills the gaps in the polynomial by adding monomials with coefficient zero.
 	def fill_gaps(self):
 		self.monomials.sort()
 		self.simplify()
